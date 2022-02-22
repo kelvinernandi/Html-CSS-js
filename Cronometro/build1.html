@@ -1,0 +1,69 @@
+<form name="form_main">
+    <div>
+      <span id="hora">00</span>:<span id="minuto">00</span>:<span id="segundo">00</span>:<span id="milissegundo">000</span>
+    </div>
+  
+    <br/>
+  
+    <button type="button" name="start">start</button>
+    <button type="button" name="pause">pause</button>
+    <button type="button" name="reset">reset</button>
+  </form>
+
+  <script>
+    "use strict";
+    
+    let hora = 0;
+    let minuto = 0;
+    let segundo = 0;
+    let milissegundo = 0;
+
+    let cron;
+
+    document.form_main.start.onclick = () => start();
+    document.form_main.pause.onclick = () => pause();
+    document.form_main.reset.onclick = () => reset();
+
+    function start() {
+    pause();
+    cron = setInterval(() => { timer(); }, 10);
+    }
+
+    function pause() {
+    clearInterval(cron);
+    }
+
+    function reset() {
+    hora = 0;
+    minuto = 0;
+    segundo = 0;
+    milissegundo = 0;
+    document.getElementById('hora').innerText = '00';
+    document.getElementById('minuto').innerText = '00';
+    document.getElementById('segundo').innerText = '00';
+    document.getElementById('milissegundo').innerText = '000';
+    }
+
+    function timer() {
+    if ((milissegundo += 10) == 1000) {
+        milissegundo = 0;
+        segundo++;
+    }
+    if (segundo == 60) {
+        segundo = 0;
+        minuto++;
+    }
+    if (minuto == 60) {
+        minuto = 0;
+        hora++;
+    }
+        document.getElementById('hora').innerText = returnData (hora)
+        document.getElementById('minuto').innerText = returnData (minuto)
+        document.getElementById('segundo').innerText = returnData (segundo)
+        document.getElementById('milissegundo').innerText = returnData (milissegundo)
+    }
+
+    function returnData(input){
+        return input > 10 ? input : `0${input}`
+    }
+</script>
